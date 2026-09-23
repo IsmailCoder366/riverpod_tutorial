@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_tutorial/state_provider.dart';
 
 import 'home_screen.dart';
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
-        home: HomeScreen(),
+        home: StateProviderExample(),
       ),
     );
   }
