@@ -33,7 +33,9 @@ class StateProviderExample extends ConsumerWidget {
                   backgroundColor: WidgetStateProperty.all<Color>(Colors.blue)
                 ),
 
-                  onPressed: (){}, child: Text('+')),
+                  onPressed: (){
+                  ref.read(counter.notifier).state--;
+                  }, child: Text('-')),
               SizedBox(width: 50),
               ElevatedButton(
                   style: ButtonStyle(
@@ -41,7 +43,9 @@ class StateProviderExample extends ConsumerWidget {
                       backgroundColor: WidgetStateProperty.all<Color>(Colors.blue)
                   ),
 
-                  onPressed: (){}, child: Text('-')),
+                  onPressed: (){
+                    ref.read(counter.notifier).state++;
+                  }, child: Text('+')),
             ],
           )
         ],
