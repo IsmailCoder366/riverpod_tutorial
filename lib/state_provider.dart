@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/legacy.dart';
 
-
-final counter = StateProvider<int>((ref){
+final counter = StateProvider<int>((ref) {
   return 0;
 });
 
+final switchState = StateProvider<bool>((ref) {
+  return false;
+});
 
 class StateProviderExample extends ConsumerWidget {
   const StateProviderExample({super.key});
@@ -15,44 +17,78 @@ class StateProviderExample extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     print('build');
     return Scaffold(
-      appBar: AppBar(
-        title: Text('State Provider Example'),
-      ),
+      appBar: AppBar(title: Text('State Provider Example')),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Consumer(builder:  (context, ref, child){
-            final count = ref.watch(counter);
-            return Center(
-              child: Text(count.toString(), style: TextStyle(fontSize: 35),),
-            );
-          }),
+          Consumer(
+            builder: (context, ref, child) {
+              final count = ref.watch(counter);
+              return Center(
+                child: Text(count.toString(), style: TextStyle(fontSize: 35)),
+              );
+            },
+          ),
+          SizedBox(height: 20),
+          Consumer(
+            builder: (context, ref, child) {
+              final switchvalue = ref.watch(switchState);
+              return Center(
+                child: Text(
+                  switchvalue.toString(),
+                  style: TextStyle(fontSize: 35),
+                ),
+              );
+            },
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
                 style: ButtonStyle(
                   foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
-                  backgroundColor: WidgetStateProperty.all<Color>(Colors.blue)
+                  backgroundColor: WidgetStateProperty.all<Color>(Colors.blue),
                 ),
 
-                  onPressed: (){
+                onPressed: () {
                   ref.read(counter.notifier).state--;
-                  }, child: Text('-')),
+                },
+                child: Text('-'),
+              ),
               SizedBox(width: 50),
               ElevatedButton(
-                  style: ButtonStyle(
-                      foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
-                      backgroundColor: WidgetStateProperty.all<Color>(Colors.blue)
-                  ),
+                style: ButtonStyle(
+                  foregroundColor: WidgetStateProperty.all<Color>(Colors.white),
+                  backgroundColor: WidgetStateProperty.all<Color>(Colors.blue),
+                ),
 
-                  onPressed: (){
-                    ref.read(counter.notifier).state++;
-                  }, child: Text('+')),
+                onPressed: () {
+                  ref.read(counter.notifier).state++;
+                },
+                child: Text('+'),
+              ),
             ],
-          )
+          ),
+          SizedBox(height: 40),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(Colors.cyan),
+                  foregroundColor: WidgetStateProperty.all(Colors.black),
+                ),
+                onPressed: () {
+                  ref.read(switchState.notifier).state = !ref
+                      .read(switchState.notifier)
+                      .state;
+                },
+                child: Text('Toggle Switch'),
+              ),
+            ],
+          ),
         ],
-      )
+      ),
     );
   }
 }
