@@ -21,6 +21,8 @@ class StateProviderExample extends ConsumerWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+
+          /// Count Value
           Consumer(
             builder: (context, ref, child) {
               final count = ref.watch(counter);
@@ -30,17 +32,18 @@ class StateProviderExample extends ConsumerWidget {
             },
           ),
           SizedBox(height: 20),
+
+          /// Toggle Switch Values
           Consumer(
             builder: (context, ref, child) {
               final switchvalue = ref.watch(switchState);
-              return Center(
-                child: Text(
-                  switchvalue.toString(),
-                  style: TextStyle(fontSize: 35),
-                ),
-              );
+              return Switch(value: switchvalue, onChanged: (value){
+                ref.read(switchState.notifier).state = value;
+              });
             },
           ),
+
+          /// Counter Buttons
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -70,23 +73,7 @@ class StateProviderExample extends ConsumerWidget {
             ],
           ),
           SizedBox(height: 40),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(Colors.cyan),
-                  foregroundColor: WidgetStateProperty.all(Colors.black),
-                ),
-                onPressed: () {
-                  ref.read(switchState.notifier).state = !ref
-                      .read(switchState.notifier)
-                      .state;
-                },
-                child: Text('Toggle Switch'),
-              ),
-            ],
-          ),
+
         ],
       ),
     );
