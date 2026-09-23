@@ -13,7 +13,7 @@ class StateProviderExample extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final count = ref.watch(counter);
+    print('build');
     return Scaffold(
       appBar: AppBar(
         title: Text('State Provider Example'),
@@ -21,9 +21,12 @@ class StateProviderExample extends ConsumerWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Center(
-            child: Text(count.toString(), style: TextStyle(fontSize: 35),),
-          ),
+          Consumer(builder:  (context, ref, child){
+            final count = ref.watch(counter);
+            return Center(
+              child: Text(count.toString(), style: TextStyle(fontSize: 35),),
+            );
+          }),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
