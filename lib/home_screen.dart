@@ -22,10 +22,10 @@ class HomeScreen extends ConsumerWidget {
           Container(
             height: 200,
             width: 200,
-            color: Colors.red.withOpacity(.5),
+            color: Colors.red.withOpacity(sliderValue),
           ),
           Slider(value: sliderValue, onChanged: (value){
-
+ref.read(sliderProvider.notifier).state = value;
           })
           
         ],
