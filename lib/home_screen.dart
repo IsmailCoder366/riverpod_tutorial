@@ -1,55 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_tutorial/slider_provider.dart';
 
 
- /// Data Just to Read
-final hello = Provider<String>((ref) {
-  return 'hello ismail';
-});
 
-final age = Provider<int>((ref){
-  return 24;
-});
-class HomeScreen extends ConsumerStatefulWidget {
+
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  ConsumerState<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends ConsumerState<HomeScreen> {
-
-  @override
-  Widget build(BuildContext context) {
-    final greet = ref.watch(hello);
-    final myAge = ref.watch(age);
+  Widget build(BuildContext context, WidgetRef ref) {
+  final sliderValue = ref.watch(sliderProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text('Riverpod Example'),
       ),
-      body: Center(
-        child: Text(greet + ' I am  ' + myAge.toString(), style: TextStyle(fontSize: 35),),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            height: 200,
+            width: 200,
+            color: Colors.red.withOpacity(.5),
+          ),
+          Slider(value: sliderValue, onChanged: (value){
+
+          })
+          
+        ],
       ),
     );
   }
 }
-
-//
-// class HomeScreen extends ConsumerWidget {
-//   const HomeScreen({super.key});
-//
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     final greet = ref.watch(hello);
-//     final myAge = ref.watch(age);
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Riverpod Example'),
-//       ),
-//       body: Center(
-//         child: Text(greet + ' I am  ' + myAge.toString(), style: TextStyle(fontSize: 35),),
-//       ),
-//     );
-//   }
-// }
